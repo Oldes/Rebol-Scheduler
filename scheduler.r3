@@ -1,14 +1,14 @@
 REBOL [
-	Title:   "Scheduler"
-	Purpose: "Task scheduling library with dialect"
-	Author:  "SOFTINNOV / Nenad Rakocevic"
+	Title:     "Scheduler"
+	Purpose:   "Task scheduling library with dialect"
+	Author:    "SOFTINNOV / Nenad Rakocevic"
 	Copyright: "2009 SOFTINNOV"
-	Email:   nr@softinnov.com
-	Date:    26/08/2009
-	Version: 0.9.0
-	Purpose: "Scheduler library for REBOL"
-	License: "BSD - see %LICENCE.txt file"
-	Needs:   3.12.0
+	Email:     nr@softinnov.com
+	Date:      26/08/2009
+	Version:   0.9.0
+	Purpose:   "Scheduler library for REBOL"
+	License:   "BSD - see %LICENCE.txt file"
+	Needs:     3.12.0
 	Comments: {
 
 		Scheduler DSL quickstart
@@ -26,13 +26,13 @@ REBOL [
 
 		o Recurring event :
 			<name:> EVERY 
-				<n> <unit>		; recurring unit
-				<allowed>		; specific point(s) in time or duration(s) allowed
-				<NOT forbidden>	; specific point(s) in time or duration(s) forbidden
-				<FROM moment>	; starting point
-				<AT moment>		; fix time for each event (only date changes)
-				<t TIMES>		; limit the number of event occurences
-				DO action		; job to execute
+				<n> <unit>      ; recurring unit
+				<allowed>       ; specific point(s) in time or duration(s) allowed
+				<NOT forbidden> ; specific point(s) in time or duration(s) forbidden
+				<FROM moment>   ; starting point
+				<AT moment>     ; fix time for each event (only date changes)
+				<t TIMES>       ; limit the number of event occurences
+				DO action       ; job to execute
 		  with
 			<name:>: set-word! value for naming a task (for future access using the API).
 			<n>: integer! value for unit multiplying.
@@ -65,10 +65,10 @@ REBOL [
 
 		Scheduler API
 		-------------
-		scheduler/plan [spec]		; add one or more tasks to the scheduler
-		scheduler/plan/new [spec]	; same as above but removes all previous tasks
-		scheduler/delete 'name		; removes the named task from the scheduler
-		scheduler/wait				; provides an adequate global event loop
+		scheduler/plan [spec]      ; add one or more tasks to the scheduler
+		scheduler/plan/new [spec]  ; same as above but removes all previous tasks
+		scheduler/delete 'name     ; removes the named task from the scheduler
+		scheduler/wait             ; provides an adequate global event loop
 
 		Examples
 		--------
