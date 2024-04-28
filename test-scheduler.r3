@@ -114,4 +114,3 @@ print ""
 print expecting		; result can differ a little due to events fired in the same second
 print either out = expecting ["OK tick tests"]["^/##not matching!!"]
 
-halt
