@@ -142,8 +142,8 @@ scheduler: context [
 	reset-series: func [s [series!] len [integer!]][head clear skip s len]
 	
 	reset-locals: has [list][
-		clear find/tail list: words-of self 'value
-		set bind list self err: none
+		name: mult: unit: n: allow: forbid: on-day: ts: from: times: job: err:
+		type: _s: _e: s: e: value: none
 	]
 	
 	allowed?: func [spec [block!] time [time!]][
