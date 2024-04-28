@@ -1,6 +1,6 @@
 REBOL []
 
-do %scheduler.r
+do %scheduler.r3
 
 ;------------------
 ;--- Unit tests ---
