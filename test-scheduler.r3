@@ -7,7 +7,7 @@ scheduler: import %scheduler.reb
 ;------------------
 
 ;; Using fake `get-now` function for the test
-old-now: :scheduler/get-now
+original-now: :scheduler/get-now
 scheduler/get-now: 02-Jan-2009/01:00:01
 
 c: 0
@@ -94,27 +94,45 @@ foreach [rule evt1 evt2] tests [
 print "^/-- unit tests done --"
 print [c "error(s)"]
 
+;; Restore the original function
+scheduler/get-now: :original-now
+
 print "^/---- Ticking tests ---"
 
-scheduler/get-now: :old-now
-scheduler/reset
-
-out: make string! 64
-expecting: "12112151211219152110211215121121152112112151"
-emit: func [v][prin v append out v]
-
-scheduler/plan compose [
-	at (now + 00:00:12)  do [emit "0"]
-	in 9 sec             do [emit "9"]
-	every 1 sec 25 times do [emit "1"]
-	every 2 sec 12 times do [emit "2"]
-	every 5 sec  5 times do [emit "5"]
+data: make block! 60
+emit: func [v][append data probe reduce [v round difference now/precise started]]
+validate-results: func[data id step /local tm][
+	tm: 0:0:0
+	foreach [i t] data [
+		if i = id [
+			if step <> (t - tm) [return false]
+			tm: tm + step
+		]
+	]
+	true
 ]
 
+scheduler/reset
+scheduler/plan compose [
+	at (now/precise + 00:00:12) do [emit 0]
+	in 9 sec                    do [emit 9]
+	every 1 sec 25 times        do [emit 1]
+	every 2 sec 12 times        do [emit 2]
+	every 5 sec  5 times        do [emit 5]
+]
+
+started: now/precise
 scheduler/wait
 
+;; Validate if all actions were evaluated in expected time steps
 print ""
-print expecting		; result can differ a little due to events fired in the same second
-print either out = expecting ["OK tick tests"]["^/##not matching!!"]
+print either ok: all [
+	validate-results data 0 0:0:12
+	validate-results data 1 0:0:01
+	validate-results data 2 0:0:02
+	validate-results data 5 0:0:05
+	validate-results data 9 0:0:09
+][as-green "OK tick tests"][as-red "##not matching!!"]
 
-if any [c > 0 out <> expecting][ quit/return 1 ]
+if any [c > 0 not ok][ quit/return 1 ]
+()
