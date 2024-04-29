@@ -1,12 +1,15 @@
 REBOL []
 
-do %scheduler.r3
+scheduler: import %scheduler.r3
 
 ;------------------
 ;--- Unit tests ---
 ;------------------
-sys-now: :now
-now: 02-Jan-2009/01:00:01
+
+;; Using fake `get-now` function for the test
+old-now: :scheduler/get-now
+scheduler/get-now: 02-Jan-2009/01:00:01
+
 c: 0
 tests: [
 ;	-RULE-                                               -1st Event-           -2nd Event-
@@ -93,11 +96,11 @@ print [c "error(s)"]
 
 print "^/---- Ticking tests ---"
 
-now: :sys-now
+scheduler/get-now: :old-now
 scheduler/reset
 
 out: make string! 64
-expecting: "11211215121121912511201121512112112511211215"
+expecting: "12112151211219152110211215121121152112112151"
 emit: func [v][prin v append out v]
 
 scheduler/plan compose [
@@ -114,3 +117,4 @@ print ""
 print expecting		; result can differ a little due to events fired in the same second
 print either out = expecting ["OK tick tests"]["^/##not matching!!"]
 
+if any [c > 0 out <> expecting][ quit/return 1 ]
