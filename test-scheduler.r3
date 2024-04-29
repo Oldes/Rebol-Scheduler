@@ -1,6 +1,6 @@
 REBOL []
 
-scheduler: import %scheduler.r3
+scheduler: import %scheduler.reb
 
 ;------------------
 ;--- Unit tests ---
