@@ -1,4 +1,8 @@
+[![rebol-scheduler](https://github.com/user-attachments/assets/8218d861-513c-41c8-bb23-fc58da7d2fee)](https://github.com/Oldes/Rebol-Scheduler)
+
 [![Rebol-Scheduler CI](https://github.com/Oldes/Rebol-Scheduler/actions/workflows/main.yml/badge.svg)](https://github.com/Oldes/Rebol-Scheduler/actions/workflows/main.yml)
+[![Gitter](https://badges.gitter.im/rebol3/community.svg)](https://app.gitter.im/#/room/#Rebol3:gitter.im)
+[![Zulip](https://img.shields.io/badge/zulip-join_chat-brightgreen.svg)](https://rebol.zulipchat.com/)
 
 # Rebol/Scheduler
 
